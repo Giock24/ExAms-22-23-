@@ -95,6 +95,7 @@ public class Test {
         b1.addElement("bb");
         b1.addElement("ccc");
         VectorBuilder<Integer> b2 = b1.mapToNewBuilder(s -> s.length()*10);
+        System.out.println(b2.build().get().asList());
         assertEquals(b2.build().get().asList(), Arrays.asList(10,20,30));
     }
     

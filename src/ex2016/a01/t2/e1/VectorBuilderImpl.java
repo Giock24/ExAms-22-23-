@@ -6,14 +6,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class VectorBuilderImpl<X> implements VectorBuilder<X> {
+public class VectorBuilderImpl<X, Y> implements VectorBuilder<X> {
 
 	private List<X> list;
+	private List<Y> otherList;
 	private boolean built = false;
 	
 	/* Constructor Builder without args on entry */
 	public VectorBuilderImpl() {
-		list = new ArrayList<>();
+		this.list = new ArrayList<>();
+	}
+	
+	private VectorBuilderImpl(final List<Y> newlist) {
+		this.otherList = new ArrayList<>(newlist);
 	}
 	
 	@Override
@@ -55,12 +60,15 @@ public class VectorBuilderImpl<X> implements VectorBuilder<X> {
 
 	@Override
 	public Optional<Vector<X>> buildWithFilter(Filter<X> filter) {
+		// vers. with pipeline
 		if (this.list.stream().allMatch(elem -> filter.check(elem))) {
 			return Optional.of(new VectorImpl<X>(this.list.stream().collect(Collectors.toList())));
 		} else {
 			return Optional.empty();
 		}
+		
 		/*
+		 * vers. without pipeline
 		for (X elem : this.list) {
 			if (filter.check(elem)) {
 			} else {
@@ -73,8 +81,11 @@ public class VectorBuilderImpl<X> implements VectorBuilder<X> {
 
 	@Override
 	public <Y> VectorBuilder<Y> mapToNewBuilder(Mapper<X, Y> mapper) {
-		// TODO Auto-generated method stub
-		return null;
+		final List<Y> newlist = this.list.stream().map(elem -> mapper.transform(elem)).collect(Collectors.toList());
+		//this.list = (List<X>) this.list.stream().map(elem -> mapper.transform(elem)).collect(Collectors.toList());
+		//System.out.println(this.list);
+		//System.out.println(newlist);
+		return new VectorBuilderImpl<>(newlist);
 	}
 
 }
