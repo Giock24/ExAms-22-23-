@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class VectorBuilderImpl<X> implements VectorBuilder<X> {
 
@@ -43,11 +44,10 @@ public class VectorBuilderImpl<X> implements VectorBuilder<X> {
 
 	@Override
 	public Optional<Vector<X>> build() {
-		//final Vector<X> vect = new VectorImpl<X>(list);
 		if (!this.built) {
 			this.built = true;
-			//System.out.println("passa?");
-			return Optional.of(new VectorImpl<X>(list));
+			// i passed on input a copy of this.list 
+			return Optional.of(new VectorImpl<X>(this.list.stream().collect(Collectors.toList())));
 		} else {
 			return Optional.empty();
 		}

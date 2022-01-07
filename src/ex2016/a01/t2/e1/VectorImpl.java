@@ -9,8 +9,8 @@ public class VectorImpl<X> implements Vector<X> {
 	
 	private List<X> list;
 	
-	protected VectorImpl(List<X> list) {
-		this.list = new ArrayList<>(list);
+	protected VectorImpl(final List<X> list) {
+		this.list = new ArrayList<>(list.stream().collect(Collectors.toUnmodifiableList()));
 	}
 
 	@Override
