@@ -55,8 +55,20 @@ public class VectorBuilderImpl<X> implements VectorBuilder<X> {
 
 	@Override
 	public Optional<Vector<X>> buildWithFilter(Filter<X> filter) {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.list.stream().allMatch(elem -> filter.check(elem))) {
+			return Optional.of(new VectorImpl<X>(this.list.stream().collect(Collectors.toList())));
+		} else {
+			return Optional.empty();
+		}
+		/*
+		for (X elem : this.list) {
+			if (filter.check(elem)) {
+			} else {
+				return Optional.empty();
+			}
+		}
+		return Optional.of(new VectorImpl<X>(this.list.stream().collect(Collectors.toList())));
+		*/
 	}
 
 	@Override
