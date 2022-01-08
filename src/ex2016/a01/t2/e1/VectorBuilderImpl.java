@@ -6,21 +6,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class VectorBuilderImpl<X, Y> implements VectorBuilder<X> {
+public class VectorBuilderImpl<X> implements VectorBuilder<X> {
 
 	private List<X> list;
-	private List<Y> otherList;
+	//private List<Y> otherList;
 	private boolean built = false;
 	
 	/* Constructor Builder without args on entry */
 	public VectorBuilderImpl() {
 		this.list = new ArrayList<>();
 	}
-	
+	/*
 	private VectorBuilderImpl(final List<Y> newlist) {
 		this.otherList = new ArrayList<>(newlist);
 	}
-	
+	*/
 	@Override
 	public void addElement(X x) {
 		list.add(x);
@@ -81,11 +81,11 @@ public class VectorBuilderImpl<X, Y> implements VectorBuilder<X> {
 
 	@Override
 	public <Y> VectorBuilder<Y> mapToNewBuilder(Mapper<X, Y> mapper) {
-		final List<Y> newlist = this.list.stream().map(elem -> mapper.transform(elem)).collect(Collectors.toList());
+		//final List<Y> newlist = this.list.stream().map(elem -> mapper.transform(elem)).collect(Collectors.toList());
 		//this.list = (List<X>) this.list.stream().map(elem -> mapper.transform(elem)).collect(Collectors.toList());
 		//System.out.println(this.list);
 		//System.out.println(newlist);
-		return new VectorBuilderImpl<>(newlist);
+		return new VectorBuilderImpl<Y>();
 	}
 
 }
