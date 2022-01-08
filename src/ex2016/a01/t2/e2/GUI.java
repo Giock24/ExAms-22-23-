@@ -1,21 +1,15 @@
 package ex2016.a01.t2.e2;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import javax.swing.*;
 
 public class GUI {
 	
-	private final static String PATH = System.getProperty("user.home") + File.separator +"a.txt";
-	final File file = new File(PATH);
-	List<Integer> list = new ArrayList<>();
+	private final Controller c1 = new ControllerImpl();
     
     public GUI(String fileName){
+    	
+    	c1.nameFile(fileName);
+    	
         JFrame jf = new JFrame();
         
         JButton jbInc = new JButton("INCINC");
@@ -31,27 +25,15 @@ public class GUI {
         jp.add(jbOK);
         
         /* Handlers */
-        jbInc.addActionListener(e -> {
-        	int incTwo = 2;
-        	this.list.add(incTwo);
-        	incTwo = incTwo * 2;
-        });
+        jbInc.addActionListener(e -> c1.mulByTwo());
         
-        jbRand.addActionListener(e -> {
-        	Random rgn = new Random(10);
-        	this.list.add(rgn.nextInt());
-        });
+        jbRand.addActionListener(e -> c1.rng());
         
-        j1.addActionListener(e -> this.list.add(1));
+        j1.addActionListener(e -> c1.plusONE());
         
         jbOK.addActionListener(e -> {
-        	System.out.println(this.list);
-        	try (FileWriter file2 = new FileWriter(this.file)) {
-        		file2.write(this.list.stream().map(elem -> elem.toString()).toString());
-        	} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-        	this.list = new ArrayList<>();
+        	System.out.println(c1.getCurrentSequece());
+        	c1.writeAll();
         });
         
         jf.getContentPane().add(jp);
