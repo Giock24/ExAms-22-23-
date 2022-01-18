@@ -37,4 +37,16 @@ public interface Controller {
 	 */
 	List<Integer> getCurrentSequece();
 	
+	/**
+	 * The Client want to add that number and will be add on a list
+	 */
+	void addElement(Supplier<Integer> elem);
+	
+	/**
+	 * Return an Integer that you pass.
+	 */
+	interface Supplier<X> {
+		int supply();
+	}
+	
 }

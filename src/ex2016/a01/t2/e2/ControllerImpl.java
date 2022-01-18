@@ -37,7 +37,7 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void rng() {
 		final Random rand = new Random();
-		this.num.add(rand.nextInt(100)* -1);
+		this.num.add(rand.nextInt(100) * -1);
 	}
 
 	@Override
@@ -52,6 +52,12 @@ public class ControllerImpl implements Controller {
 	private void reset() {
 		this.num = new ArrayList<>();
 		this.mulTwo = 2;
+	}
+	
+	// I created this method to using the pattern Strategy
+	@Override
+	public void addElement(Supplier<Integer> elem) {
+		this.num.add(elem.supply());
 	}
 
 	@Override

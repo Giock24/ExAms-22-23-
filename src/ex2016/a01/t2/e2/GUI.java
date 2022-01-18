@@ -1,5 +1,7 @@
 package ex2016.a01.t2.e2;
 
+import java.util.Random;
+
 import javax.swing.*;
 
 public class GUI {
@@ -27,9 +29,12 @@ public class GUI {
         /* Handlers */
         jbInc.addActionListener(e -> c1.mulByTwo());
         
-        jbRand.addActionListener(e -> c1.rng());
+        jbRand.addActionListener(e -> c1.addElement(() -> {
+        	final Random rand = new Random();
+        	return (rand.nextInt(100) * -1);
+        }));
         
-        j1.addActionListener(e -> c1.plusONE());
+        j1.addActionListener(e -> c1.addElement(() -> 1));
         
         jbOK.addActionListener(e -> {
         	System.out.println(c1.getCurrentSequece());
